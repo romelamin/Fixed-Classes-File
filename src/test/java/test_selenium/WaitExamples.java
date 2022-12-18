@@ -2,6 +2,7 @@ package test_selenium;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -11,7 +12,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
-import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
@@ -20,43 +20,31 @@ public class WaitExamples {
     @Test
     public void testWait(){
 
+        WebDriver driver = new ChromeDriver();
 
+        driver.get("https://amazon.com");
+        driver.manage().window().maximize();
 
-        /*driver = new ChromeDriver();
+        FluentWait<WebDriver> fluentWait = new FluentWait<>(driver)
+                .withTimeout(Duration.ofSeconds(5))//total of 30 seconds wait
+                .pollingEvery(Duration.ofSeconds(1))//polling every 5 seconds
+                .ignoring(NoSuchElementException.class);//if nothing found
 
-        driver.get("https://amazon.com");*/
-        //driver.manage().window().maximize();
-
-        //Implicit wait
-        //driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-
-        //Explicit wait
-       /* WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-        //signup of amazon.com
-        WebElement signupButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("createAccountSubmit")));
-        signupButton.click();
-
-        driver.close();*/
-
-      /*  //Fluent wait
-        FluentWait flWait = new FluentWait<>(driver)
-                .withTimeout(Duration.ofSeconds(10))
-                .pollingEvery(Duration.ofSeconds(1))
-                .ignoring(NoSuchElementException.class);
-
-
-        WebElement createAcc = flWait.until(new Function() {
-
+        WebElement createAcc =  fluentWait.until(new Function<WebDriver, WebElement>() {
             public WebElement apply(WebDriver driver) {
+                WebElement findElement = driver.findElement(By.id("auth-create-account-link"));
 
-                WebElement findElement = driver.findElement(By.id("createAccountSubmit"));
+                if(findElement.isEnabled()){
+                    System.out.println("element found");
+                }
 
-                return findElement;
+                return findElement; //this will go inside the createAcc element
             }
         });
+
         createAcc.click();
-        driver.close();*/
+
+        driver.quit();
 
 
     }

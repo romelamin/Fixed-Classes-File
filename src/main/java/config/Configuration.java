@@ -11,9 +11,9 @@ public class Configuration {
 
     //src/main/resources/prop.properties
 
-    String path = System.getProperty("user.dir") + File.separator + "src" + File.separator
-            + "main" + File .separator + "resources" + File.separator + "prop.properties";
-
+    String path = System.getProperty("user.dir") + File.separator + "src" +
+            File.separator + File.separator + "main" + File.separator +
+            "resources" + File.separator + "prop.properties";
     public Configuration(){
 
         prop = new Properties();

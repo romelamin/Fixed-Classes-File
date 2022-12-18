@@ -22,8 +22,6 @@ public class TestSearch extends BaseSetup {
 
         Assert.assertEquals(resultPage.getSearchTerm(), "shirt");
 
-        Thread.sleep(3000);
-
 
     }
 

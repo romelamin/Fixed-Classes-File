@@ -15,8 +15,6 @@ import org.testng.annotations.Optional;
 public class BaseSetup extends Configuration {
 
     public static WebDriver driver;
-
-
     @BeforeTest
     public static void startBrowser(@Optional("chrome") String browser, String url){
 
@@ -35,7 +33,7 @@ public class BaseSetup extends Configuration {
         }
 
         driver.manage().window().maximize();
-        driver.get("https://automation.scaledupit.com");
+        driver.get(getUrl());
 
     }
 
